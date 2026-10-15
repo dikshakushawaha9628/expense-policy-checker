@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "expense-policy-checker"
+version = "0.1.0"
+description = "Structured expense dataset + deterministic policy rules + advisory AI observations"
+requires-python = ">=3.10"
+
+[project.scripts]
+expense-checker = "expense_checker.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

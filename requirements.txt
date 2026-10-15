@@ -1,0 +1,3 @@
+# Runtime: Python 3.10+ standard library only (sqlite3, csv, json, urllib).
+# Optional - the test-suite is plain unittest, but also runs under pytest:
+# pytest>=7
