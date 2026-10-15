@@ -1,0 +1,13 @@
+expense_id,employee_id,expense_date,submitted_date,merchant,category,amount,currency,description,receipt_attached,approver_id
+EXP-0003,E014,2026-07-31,2026-08-03,Sunrise Diner,Meals,44.00,USD,Breakfast on business trip,yes,
+EXP-0019,E004,2026-08-13,2026-08-16,Corner Cafe,Meals,65.21,USD,Working lunch,yes,
+EXP-0045,E006,2026-09-05,2026-09-08,Sunrise Diner,Meals,20.13,USD,Breakfast on business trip,no,
+EXP-0049,E018,2026-09-07,2026-09-10,Corner Cafe,Meals,55.21,USD,Working lunch,yes,
+EXP-0010,E006,2026-08-07,2026-08-10,Noodle House,Meals,68.37,USD,Team dinner during travel,yes,
+EXP-0030,E013,2026-08-25,2026-08-28,DeskDepot,Office Supplies,108.35,USD,Notebooks for workshop,yes,
+EXP-0024,E012,2026-08-17,2026-08-20,Blue Fork Bistro,Meals,50.22,USD,Lunch with client,yes,
+EXP-0043,E019,2026-09-05,2026-09-08,RideNow,Ground Transport,19.46,USD,Airport transfer,yes,
+EXP-0120,E002,2026-10-13,2026-10-16,Sunrise Diner,Meals,18.75,USD,Breakfast on business trip,yes,
+EXP-0121,E009,2026-10-13,2026-10-16,AeroBlue,Airfare,455.00,USD,"Return flight, quarterly review",yes,
+EXP-0122,E012,2026-10-14,2026-10-17,Night Owl Bar,Meals,95.00,USD,Dinner and wine,yes,
+EXP-0123,E015,2026-10-14,2026-10-17,Cloud9 Lounge,Entertainment,60.00,USD,Stuff,yes,
