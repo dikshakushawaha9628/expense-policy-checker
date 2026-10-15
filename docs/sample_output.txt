@@ -1,0 +1,85 @@
+[ingest] expenses_batch1.csv: read=119 new=112 skipped_existing=0 rejected=7
+[ingest] expenses_batch2.csv: read=12 new=4 skipped_existing=8 rejected=0
+[rules] 13 violations recorded
+[ai] AIStats(reviewed=116, ok=115, low_confidence=1, invalid_response=0, error=0)
+
+==============================================================================
+1. DATA LOAD
+==============================================================================
+batch  file                 read  new  skipped(dup)  rejected
+-----  -------------------  ----  ---  ------------  --------
+1      expenses_batch1.csv  119   112  0             7       
+2      expenses_batch2.csv  12    4    8             0       
+
+Curated expenses: 116
+
+Rejected records (never silently dropped):
+expense_id  reason                                           
+----------  -------------------------------------------------
+EXP-0094    invalid amount ''                                
+EXP-0095    invalid amount 'N/A'                             
+EXP-0096    non-positive amount -220.0 (refunds out of scope)
+EXP-0097    unsupported currency 'XYZ'                       
+EXP-0098    missing employee_id                              
+EXP-0099    unknown category 'Snacks'                        
+EXP-0119    invalid expense_date '13/45/2026'                
+
+==============================================================================
+2. DETERMINISTIC RULE FAILURES  (policy v1.0 - authoritative)
+==============================================================================
+rule  severity  failures  usd_exposed
+----  --------  --------  -----------
+R001  medium    3         315.40     
+R002  medium    3         1632.40    
+R003  high      1         64.00      
+R004  high      1         48.50      
+R005  high      1         34.20      
+R006  high      1         750.00     
+R007  medium    1         55.00      
+R008  high      1         90.00      
+R009  high      1         640.00     
+
+Expenses: PASS=103  FAIL=13
+
+Sample of failures:
+expense_id  failed_rules  category          usd    
+----------  ------------  ----------------  -------
+EXP-0001    R007          Office Supplies   55.00  
+EXP-0062    R006          Software          750.00 
+EXP-0067    R002          Lodging           310.00 
+EXP-0070    R002          Lodging           302.40 
+EXP-0072    R001          Meals             112.40 
+EXP-0075    R003          Meals             64.00  
+EXP-0078    R002          Lodging           1020.00
+EXP-0085    R004          Alcohol           48.50  
+EXP-0089    R005          Ground Transport  34.20  
+EXP-0102    R009          Airfare           640.00 
+EXP-0106    R001          Meals             108.00 
+EXP-0118    R008          Entertainment     90.00  
+
+==============================================================================
+3. AI OBSERVATIONS  (advisory only - NOT rule failures)
+==============================================================================
+label                      count
+-------------------------  -----
+consistent                 108  
+possible_personal_expense  3    
+vague_description          2    
+category_mismatch          2    
+no_business_purpose        1    
+
+Status: low_confidence=1, ok=115
+
+Non-'consistent' observations on expenses that PASS every rule (what only AI noticed):
+expense_id  label                      conf  human?  rationale                                           
+----------  -------------------------  ----  ------  ----------------------------------------------------
+EXP-0107    possible_personal_expense  0.85          Description mentions 'gift', which suggests a person
+EXP-0108    vague_description          0.92          Description 'misc' is too vague to audit.           
+EXP-0109    possible_personal_expense  0.85          Description mentions 'netflix', which suggests a per
+EXP-0112    category_mismatch          0.75          'uber' suggests Ground Transport, but the claim is f
+EXP-0115    possible_personal_expense  0.85          Description mentions 'spa', which suggests a persona
+EXP-0116    no_business_purpose        0.45  REVIEW  Entertainment spend without a clear business purpose
+EXP-0117    category_mismatch          0.75          'hotel' suggests Lodging, but the claim is filed und
+EXP-0123    vague_description          0.92          Description 'Stuff' is too vague to audit.          
+
+CSV written to output/review_report.csv
