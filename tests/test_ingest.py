@@ -43,6 +43,15 @@ class TestIngest(unittest.TestCase):
         self.assertEqual((s2.rows_new, s2.rows_skipped_existing), (0, 2))
         self.assertEqual(conn.execute("SELECT COUNT(*) FROM expenses").fetchone()[0], 2)
 
+    def test_raw_layer_preserves_source_values(self):
+        conn = make_db()
+        path = write_csv([row(merchant=" Cafe ", description="  Client lunch  ", amount=" $20.00 ")])
+        ingest_file(conn, path)
+        raw = conn.execute("SELECT merchant, description, amount FROM raw_expenses").fetchone()
+        curated = conn.execute("SELECT merchant, description, amount FROM expenses").fetchone()
+        self.assertEqual(tuple(raw), (" Cafe ", "  Client lunch  ", " $20.00 "))
+        self.assertEqual(tuple(curated), ("Cafe", "Client lunch", 20.0))
+
     def test_incremental_load_appends_only_new_rows(self):
         conn = make_db()
         ingest_file(conn, write_csv([row()], "a.csv"))

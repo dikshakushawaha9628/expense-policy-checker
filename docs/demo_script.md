@@ -9,5 +9,5 @@
 | 2:40 | Terminal: `make demo` | Walk the 3 report sections: load (note 7 rejects, 8 skipped re-sends), rule failures, AI observations. |
 | 4:00 | `src/expense_checker/ai/base.py` + `validation.py` | One technical decision: AI behind an interface; output is untrusted & validated; swap to Ollama via env var. |
 | 4:50 | Terminal: `make edge` | Edge cases: bad schema, bad value, rerun idempotency, garbage/offline AI - rules unaffected. |
-| 5:50 | Terminal: `make test` | 34 tests incl. failure cases. |
+| 5:50 | Terminal: `make test` | 35 tests incl. failure cases. |
 | 6:10 | README "Limitations" | Heuristic stand-in; production: Postgres/dbt, eval set, review queue. |

@@ -132,7 +132,7 @@ def clean_row(raw: dict[str, str], valid_currencies: set[str]) -> tuple[dict | N
 
 
 def row_hash(raw: dict[str, str]) -> str:
-    canonical = "\x1f".join((raw.get(c) or "").strip() for c in EXPECTED_COLUMNS)
+    canonical = "\x1f".join(raw.get(c) or "" for c in EXPECTED_COLUMNS)
     return hashlib.sha256(canonical.encode()).hexdigest()
 
 
@@ -169,7 +169,7 @@ def ingest_file(conn: sqlite3.Connection, path: str | Path) -> IngestStats:
             cur = conn.execute(
                 f"INSERT OR IGNORE INTO raw_expenses(batch_id, row_hash, {', '.join(EXPECTED_COLUMNS)}) "
                 f"VALUES (?, ?, {', '.join('?' * len(EXPECTED_COLUMNS))})",
-                (batch_id, row_hash(raw), *[(raw.get(c) or "").strip() for c in EXPECTED_COLUMNS]),
+                (batch_id, row_hash(raw), *[raw.get(c) or "" for c in EXPECTED_COLUMNS]),
             )
             if cur.rowcount == 0:  # identical row already loaded
                 stats.rows_skipped_existing += 1

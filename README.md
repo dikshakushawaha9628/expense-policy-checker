@@ -24,7 +24,7 @@ the separation **structural**: different tables, different report sections, no c
 ```bash
 git clone <repo-url> && cd expense-policy-checker
 python3 --version            # 3.10+ ; nothing to pip install
-make test                    # 34 tests
+make test                    # 35 tests
 make demo                    # full pipeline on sample data -> report + output/review_report.csv
 make edge                    # failure / edge-case demonstration
 ```
@@ -37,6 +37,19 @@ python3 -m unittest discover -s tests -t . -v
 python3 -m expense_checker run --as-of 2026-10-15
 python3 -m expense_checker edge-demo
 ```
+
+### Windows PowerShell
+
+From the project root, Python 3.10+ is sufficient; no package installation is required:
+
+```powershell
+$env:PYTHONPATH = "src"
+py -3.10 -m unittest discover -s tests -t . -v
+py -3.10 -m expense_checker run --as-of 2026-10-15
+py -3.10 -m expense_checker edge-demo
+```
+
+If the Python launcher (`py`) is unavailable, replace `py -3.10` with `python`.
 
 Step by step: `init` → `ingest` → `check --as-of 2026-10-15` → `ai` → `report`
 (`python3 -m expense_checker --help`). `--as-of` fixes the "processing date" so results are reproducible
@@ -76,7 +89,7 @@ src/expense_checker/   ingest.py rules.py policy.py ai_review.py report.py pipel
 sql/                   schema.sql (tables+constraints)  views.sql (reporting views, window function)
 data/sample/           synthetic CSVs (batch1 + batch2)    data/reference/fx_rates.csv
 docs/                  policy.md  architecture.md  design_note.md  demo_script.md  sample_output.txt
-tests/                 34 unittest tests (pytest-compatible)
+tests/                 35 unittest tests (pytest-compatible)
 .env.example           config keys (no secrets needed by default)
 ```
 
@@ -124,7 +137,7 @@ duplicates, approval > USD 500, late submission, future date, self-approval). Am
   (0.6) → `low_confidence`. All set `needs_human_review=1`. Errors are retried next run. The run never fails because of the model.
 * **Stored:** `ai_observations` only (with provider, model, prompt version). It cannot change `rule_violations`.
 
-## 9. Tests (34)
+## 9. Tests (35)
 
 `make test` — stdlib `unittest`, also runs under `pytest`.
 
@@ -144,12 +157,29 @@ duplicates, approval > USD 500, late submission, future date, self-approval). Am
 * AI independently surfaced **8 items that passed every rule** (gift, "misc", Netflix, Uber filed as Meals, spa, …),
   one of them `low_confidence` → flagged for human review.
 
-## 11. Assumptions
+## 11. Submission checklist
+
+* **Repository:** [expense-policy-checker](https://github.com/dikshakushawaha9628/expense-policy-checker)
+* **Demo video (5–8 minutes):** No recording or shareable link is included yet. Record a walkthrough
+  using [`docs/demo_script.md`](docs/demo_script.md), upload it where reviewers can access it, and add
+  the video link here before submitting.
+* **Design note:** [`docs/design_note.md`](docs/design_note.md) explains architecture choices, trade-offs,
+  limitations, and alternatives.
+
+## 12. Tools and external resources
+
+* The standard setup uses Python's standard library and SQLite; no third-party Python packages, API keys,
+  or network access are required.
+* The default advisory reviewer is an offline keyword-based heuristic. An optional local Ollama install
+  and model can replace it; see [Optional: a real local model (free)](#optional-a-real-local-model-free).
+* The sample expenses are synthetic. Fixed FX rates are supplied as sample data, not fetched from a live service.
+
+## 13. Assumptions
 
 Fixed FX rates · blank receipt = no receipt · refunds out of scope · policy thresholds in `policy.py` mirror `docs/policy.md`
 · "processing date" defaults to today (`--as-of` overrides) · all data is synthetic (seeded generator: `make data`).
 
-## 12. Known limitations / what I'd improve for production
+## 14. Known limitations / what I'd improve for production
 
 * The heuristic provider is keyword logic, not a model — it demonstrates the contract, not accuracy.
 * No amendment/versioning workflow for corrected claims; no per-person cumulative limits; no refunds.
@@ -157,7 +187,7 @@ Fixed FX rates · blank receipt = no receipt · refunds out of scope · policy t
   effective dates, an evaluation set to measure the LLM before relying on it, a review-queue UI, PII controls,
   orchestration + alerting (e.g. rejection-rate spikes).
 
-## 13. Secrets
+## 15. Secrets
 
 No secrets in code or history. Config via environment / git-ignored `.env`; `.env.example` lists keys.
 The default setup needs no credentials at all.
