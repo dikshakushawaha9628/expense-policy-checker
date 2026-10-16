@@ -7,6 +7,8 @@ dataset**, check them against a written policy with **deterministic rules**, and
 * Python 3.10+ **standard library only** · SQL (SQLite) · synthetic data only · no secrets
 * Runs from a clean checkout in ~1 second: no downloads, no API keys, no network
 
+**Short submission summary:** [`docs/submission_summary.md`](docs/submission_summary.md).
+
 ## 1. Problem statement
 
 Finance teams get expense claims as inconsistent files. Two kinds of checks are needed:
