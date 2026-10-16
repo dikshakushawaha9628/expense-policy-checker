@@ -57,6 +57,4 @@ amendment workflow, and no human-review interface.
 ## Submission links
 
 * **Repository:** [expense-policy-checker](https://github.com/dikshakushawaha9628/expense-policy-checker)
-* **Demo video (5–8 minutes):** Not recorded or linked yet. Record the walkthrough
-  in [`demo_script.md`](demo_script.md), upload it with reviewer access, and add
-  the shareable link here.
+

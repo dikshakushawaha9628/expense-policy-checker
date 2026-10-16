@@ -90,7 +90,7 @@ src/expense_checker/   ingest.py rules.py policy.py ai_review.py report.py pipel
   └── ai/              base.py (interface) validation.py heuristic.py ollama.py
 sql/                   schema.sql (tables+constraints)  views.sql (reporting views, window function)
 data/sample/           synthetic CSVs (batch1 + batch2)    data/reference/fx_rates.csv
-docs/                  policy.md  architecture.md  design_note.md  demo_script.md  sample_output.txt
+docs/                  policy.md  architecture.md  design_note.md  sample_output.txt
 tests/                 35 unittest tests (pytest-compatible)
 .env.example           config keys (no secrets needed by default)
 ```
@@ -163,8 +163,8 @@ duplicates, approval > USD 500, late submission, future date, self-approval). Am
 
 * **Repository:** [expense-policy-checker](https://github.com/dikshakushawaha9628/expense-policy-checker)
 * **Demo video (5–8 minutes):** No recording or shareable link is included yet. Record a walkthrough
-  using [`docs/demo_script.md`](docs/demo_script.md), upload it where reviewers can access it, and add
-  the video link here before submitting.
+  showing the architecture, sample run and output, one technical decision, an edge case, and limitations;
+  upload it where reviewers can access it, then add the video link here.
 * **Design note:** [`docs/design_note.md`](docs/design_note.md) explains architecture choices, trade-offs,
   limitations, and alternatives.
 
